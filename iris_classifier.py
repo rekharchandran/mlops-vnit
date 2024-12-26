@@ -11,7 +11,7 @@ Original file is located at
 import pandas as pd
 import numpy as np
 from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 import matplotlib.pyplot as plt
@@ -33,11 +33,17 @@ iris_df['species'] = iris_df['target'].map({0: 'setosa', 1: 'versicolor', 2: 'vi
 print("First 5 rows of the dataset:")
 print(iris_df.head())
 
+# Perform cross-validation
+model = LogisticRegression(max_iter=200)
+cv_scores = cross_val_score(model, X, y, cv=5, scoring='accuracy')  # 5-fold cross-validation
+
+print("\nCross-Validation Scores:", cv_scores)
+print("Mean CV Accuracy:", np.mean(cv_scores))
+
 # Split the dataset into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Train a Logistic Regression model
-model = LogisticRegression(max_iter=200)
 model.fit(X_train, y_train)
 
 # Make predictions
@@ -45,7 +51,7 @@ y_pred = model.predict(X_test)
 
 # Evaluate the model
 accuracy = accuracy_score(y_test, y_pred)
-print("\nModel Accuracy:", accuracy)
+print("\nModel Accuracy on Test Set:", accuracy)
 
 # Classification report
 print("\nClassification Report:")
