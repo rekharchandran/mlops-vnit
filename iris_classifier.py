@@ -41,7 +41,7 @@ print("\nCross-Validation Scores:", cv_scores)
 print("Mean CV Accuracy:", np.mean(cv_scores))
 
 # Split the dataset into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 # Train a Logistic Regression model
 model.fit(X_train, y_train)
